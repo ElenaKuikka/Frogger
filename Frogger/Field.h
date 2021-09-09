@@ -4,6 +4,7 @@
 
 #include "GamePoint.h"
 #include"Line.h"
+#include"Frog.h"
 
 class Field
 {
@@ -175,6 +176,9 @@ public:
 			if (isBoundary(GamePoint(13, i))) {
 				playingField[13].setLineElement(i, GamePoint(13, i, GamePoint::BOUNDARY));
 			}
+			else if(i == 8){
+				playingField[13].setLineElement(i, GamePoint(13, i, GamePoint::FROG));
+			}
 			else{
 				playingField[13].setLineElement(i, GamePoint(13, i, GamePoint::SAFEPOINT));
 			}
@@ -182,6 +186,7 @@ public:
 		for (int i = 0; i < playingField[14].getSize(); i++) {
 			playingField[14].setLineElement(i, GamePoint(14, i, GamePoint::BOUNDARY));
 		}
+		setLinesSpeed();
 	}
 
 	void printField(unsigned int tick) {
@@ -195,17 +200,9 @@ public:
 		for (int i = 0; i < rowSize; i++){
 			SetConsoleCursorPosition(hStdOut, cPosition);
 			cPosition.Y++;
-
+			
 			playingField[i].printLine();
 			
-			//for (int j = 0; j < colSize; j++){
-			//	if (isBoundary(field[i][j])){
-			//		std::cout << " # ";
-			//	}
-			//	else{
-			//		std::cout << " . ";
-			//	}
-			//}
 			std::cout << "\n";
 		}
 		std::cout << std::endl;
@@ -213,26 +210,25 @@ public:
 		std::cout << std::endl;
 	}
 
-	void drivePlayingFields(unsigned int tick, int gameSpeed) {
-		setLinesSpeed();//!!!
+	void drivePlayingFields(unsigned int tick, int gameSpeed) {//!!!!!
 		Sleep(gameSpeed);
-		if (tick % 17 == 0 ) {
-			playingField[5].driveRight();
-			playingField[11].driveRight();
-			playingField[12].driveLeft();
+		if (tick % playingField[5].getLineSpeed() == 0 ) {
+			playingField[5].driveRight(frog);
+			playingField[11].driveRight(frog);
+			playingField[12].driveLeft(frog);
 		}
-		if (tick % 13 == 0) {
-			playingField[2].driveRight();
-			playingField[3].driveLeft();
-			playingField[10].driveLeft();
+		if (tick % playingField[2].getLineSpeed() == 0) {
+			playingField[2].driveRight(frog);
+			playingField[3].driveLeft(frog);
+			playingField[10].driveLeft(frog);
 		}
-		if (tick % 11 == 0) {
-			playingField[4].driveRight();
-			playingField[8].driveLeft();
+		if (tick % playingField[4].getLineSpeed() == 0) {
+			playingField[4].driveRight(frog);
+			playingField[8].driveLeft(frog);
 		}
-		if (tick % 7 == 0) {
-			playingField[6].driveLeft();
-			playingField[9].driveRight();
+		if (tick % playingField[6].getLineSpeed() == 0) {
+			playingField[6].driveLeft(frog);
+			playingField[9].driveRight(frog);
 		}
 		/*
 		playingField[2].driveRight();
@@ -247,22 +243,101 @@ public:
 		playingField[12].driveLeft();
 		*/
 	}
+	
+	bool isBoundary(const GamePoint &point) const {
+		for (int i = 0; i < boundary.size(); i++) {
+			if (boundary[i] == point) {
+				return true;
+			}
+		}
+		return false;
+	}
 
+	std::vector<Line> getPlayingField() {
+		return playingField;
+	}
+
+	Frog getFrog() {
+		return frog;
+	}
+
+	void FrogDrive() {
+		Position FrogPositionX = frog.getFrogLocation().getPositionX();
+		Position FrogPositionY = frog.getFrogLocation().getPositionY();
+		GamePoint temp;
+		if (_kbhit()) {
+			switch (_getch()) {
+			case 'a':
+			{
+				if (!(isBoundary(GamePoint(FrogPositionX, FrogPositionY - 1)))) {
+					temp = playingField[FrogPositionX].getLineElement(FrogPositionY - 1);
+					playingField[FrogPositionX].setLineElement(FrogPositionY - 1, GamePoint(FrogPositionX, FrogPositionY - 1, GamePoint::FROG));
+					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
+					frog.setFrogMemory(temp);
+					frog.setLocation(playingField[FrogPositionX].getLineElement(FrogPositionY - 1));//!!!!!!!!!!!!!!
+				}
+				else {
+					break;
+				}
+				break;
+			}
+			case 'd':
+			{
+				if (!(isBoundary(GamePoint(FrogPositionX, FrogPositionY + 1)))) {
+					temp = playingField[FrogPositionX].getLineElement(FrogPositionY + 1);
+					playingField[FrogPositionX].setLineElement(FrogPositionY + 1, GamePoint(FrogPositionX, FrogPositionY + 1, GamePoint::FROG));
+					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
+					frog.setFrogMemory(temp);
+					frog.setLocation(playingField[FrogPositionX].getLineElement(FrogPositionY + 1));
+				}
+				else {
+					break;
+				}
+				break;
+			 }
+			case 'w':
+			{
+				if (!(isBoundary(GamePoint(FrogPositionX-1, FrogPositionY)))) {
+					temp = playingField[FrogPositionX-1].getLineElement(FrogPositionY);
+					playingField[FrogPositionX-1].setLineElement(FrogPositionY, GamePoint(FrogPositionX-1, FrogPositionY, GamePoint::FROG));
+					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
+					frog.setFrogMemory(temp);
+					frog.setLocation(playingField[FrogPositionX-1].getLineElement(FrogPositionY));
+					
+				}
+				else {
+					break;
+				}
+				break;
+			}
+			case 's':
+			{
+				if (!(isBoundary(GamePoint(FrogPositionX + 1, FrogPositionY)))) {
+					temp = playingField[FrogPositionX + 1].getLineElement(FrogPositionY);
+					playingField[FrogPositionX + 1].setLineElement(FrogPositionY, GamePoint(FrogPositionX + 1, FrogPositionY, GamePoint::FROG));
+					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
+					frog.setFrogMemory(temp);
+					frog.setLocation(playingField[FrogPositionX + 1].getLineElement(FrogPositionY));
+				}
+				else {
+					break;
+				}
+				break;
+			
+			}
+			default:
+				break;
+			}
+		}
+		
+	}
 private:
 	std::vector<GamePoint> boundary;
 	std::vector<Line> playingField;
 	//std::vector<std::vector<GamePoint>> field;
 	const int rowSize = 15;
 	const int colSize = 17;
-
-	bool isBoundary(const GamePoint &point) const{
-		for (int i = 0; i < boundary.size(); i++){
-			if (boundary[i]==point){
-				return true;
-			}
-		}
-		return false;
-	}
+	Frog frog;
 
 	void setLinesSpeed() {
 		playingField[5].setLineSpeed(Line::FIRST);
@@ -279,6 +354,7 @@ private:
 		playingField[6].setLineSpeed(Line::FOURTH);
 		playingField[9].setLineSpeed(Line::FOURTH);
 	}
+
 };
 
 #endif FIELD

@@ -143,6 +143,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Frog.h" />
     <ClInclude Include="GamePoint.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Game.h" />

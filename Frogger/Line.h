@@ -2,6 +2,8 @@
 
 #define LINE
 
+#include"Frog.h"
+
 class Line {
 public:
 	enum LineSpeed {
@@ -27,6 +29,9 @@ public:
 	LineSpeed getLineSpeed() const {
 		return this->lineSpeed;
 	}
+	GamePoint getLineElement(int index) {
+		return line[index];
+	}
 	void setLineElement(int index, GamePoint point) {
 		line[index] = point;
 	}
@@ -40,30 +45,51 @@ public:
 		}
 	}
 
-	/*
-	Line &operator=(const Line &firstLine) {
-		if (this == &firstLine){
-			return *this;
-		}
-		line = firstLine.line;
-		return *this;
-	}
-	*/
-	void driveLeft() {
+	friend class Frog;
+
+	void driveLeft(Frog &frog) {
 		std::vector<GamePoint> tempLine(line);
-		for (int i = 1; i < lineSize-2; i++){
-			line[i].setGameElement(tempLine[i + 1].getGameElement());
+		for (int i = 1; i < lineSize-2; i++){//!!!!!!!!!Frog memory
+			if (tempLine[i + 1].isFrog()){
+				line[i] = tempLine[i + 1];
+				frog.setLocation(line[i]);
+			}
+			else{
+				line[i] = tempLine[i + 1];
+			}
 		}
-		line[lineSize - 2].setGameElement(tempLine[1].getGameElement());
+		if (tempLine[1].isFrog()){
+			line[lineSize - 2] = tempLine[1];
+			frog.setLocation(line[lineSize - 2]);
+		}
+		else{
+			line[lineSize - 2] = tempLine[1];
+		}
+		
 	}
 
-	void driveRight() {
+	void driveRight(Frog &frog) {
 		std::vector<GamePoint> tempLine(line);
-		line[1].setGameElement(tempLine[lineSize-2].getGameElement());
+		if (tempLine[lineSize - 2].isFrog()){
+			line[1] = tempLine[lineSize - 2];
+			frog.setLocation(line[1]);
+		}
+		else{
+			line[1] = tempLine[lineSize - 2];
+		}
+		
 		for (int i = 2; i < lineSize - 1; i++) {
-			line[i].setGameElement(tempLine[i - 1].getGameElement());
+			if (tempLine[i-1].isFrog()){
+				line[i] = tempLine[i - 1];
+				frog.setLocation(line[i]);
+			}
+			else{
+				line[i] = tempLine[i - 1];
+			}
 		}
 	}
+
+	
 private:
 	std::vector<GamePoint> line;
 	const int lineSize = 17;

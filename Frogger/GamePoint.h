@@ -5,6 +5,8 @@
 #include<iostream>
 #include<vector>
 #include<Windows.h>
+#include<conio.h>
+#include<chrono>
 
 using Position = unsigned short;
 
@@ -45,10 +47,10 @@ public:
 		return this->gameElement;
 	}
 	
-	void setCoordX(Position x) {
+	void setPositionX(Position x) {
 		this->x = x;
 	}
-	void setCoordY(Position y) {
+	void setPositionY(Position y) {
 		this->y = y;
 	}
 	void setGameElement(GameElement elemName) {
@@ -72,15 +74,26 @@ public:
 		this->y = object.y;
 		this->gameElement = object.gameElement;
 	}
-
+	/*
 	bool isBoundary() {
-		if (gameElement==BOUNDARY){
+		if (gameElement == BOUNDARY){
 			return true;
 		}
 		else{
 			return false;
 		}
 	}
+	*/
+	bool isFrog() {
+		if (gameElement == FROG) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+
 
 	friend bool operator==(const GamePoint &first, const GamePoint &second) {
 		return(first.x==second.x && first.y==second.y);

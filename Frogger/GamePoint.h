@@ -84,6 +84,7 @@ public:
 		}
 	}
 	*/
+	
 	bool isFrog() {
 		if (gameElement == FROG) {
 			return true;
@@ -92,7 +93,7 @@ public:
 			return false;
 		}
 	}
-
+	
 
 
 	friend bool operator==(const GamePoint &first, const GamePoint &second) {

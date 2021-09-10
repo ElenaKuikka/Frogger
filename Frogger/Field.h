@@ -213,35 +213,23 @@ public:
 	void drivePlayingFields(unsigned int tick, int gameSpeed) {//!!!!!
 		Sleep(gameSpeed);
 		if (tick % playingField[5].getLineSpeed() == 0 ) {
-			playingField[5].driveRight(frog);
-			playingField[11].driveRight(frog);
-			playingField[12].driveLeft(frog);
+			playingField[5].driveRightRiver(frog);
+			playingField[11].driveRightRoad(frog);
+			playingField[12].driveLeftRoad(frog);
 		}
 		if (tick % playingField[2].getLineSpeed() == 0) {
-			playingField[2].driveRight(frog);
-			playingField[3].driveLeft(frog);
-			playingField[10].driveLeft(frog);
+			playingField[2].driveRightRiver(frog);
+			playingField[3].driveLeftRiver(frog);
+			playingField[10].driveLeftRoad(frog);
 		}
 		if (tick % playingField[4].getLineSpeed() == 0) {
-			playingField[4].driveRight(frog);
-			playingField[8].driveLeft(frog);
+			playingField[4].driveRightRiver(frog);
+			playingField[8].driveLeftRoad(frog);
 		}
 		if (tick % playingField[6].getLineSpeed() == 0) {
-			playingField[6].driveLeft(frog);
-			playingField[9].driveRight(frog);
+			playingField[6].driveLeftRiver(frog);
+			playingField[9].driveRightRoad(frog);
 		}
-		/*
-		playingField[2].driveRight();
-		playingField[3].driveLeft();
-		playingField[4].driveRight();
-		playingField[5].driveRight();
-		playingField[6].driveLeft();
-		playingField[8].driveLeft();
-		playingField[9].driveRight();
-		playingField[10].driveLeft();
-		playingField[11].driveRight();
-		playingField[12].driveLeft();
-		*/
 	}
 	
 	bool isBoundary(const GamePoint &point) const {
@@ -272,9 +260,9 @@ public:
 				if (!(isBoundary(GamePoint(FrogPositionX, FrogPositionY - 1)))) {
 					temp = playingField[FrogPositionX].getLineElement(FrogPositionY - 1);
 					playingField[FrogPositionX].setLineElement(FrogPositionY - 1, GamePoint(FrogPositionX, FrogPositionY - 1, GamePoint::FROG));
+					frog.changeFrogLocation(playingField[FrogPositionX].getLineElement(FrogPositionY - 1));
 					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
 					frog.setFrogMemory(temp);
-					frog.setLocation(playingField[FrogPositionX].getLineElement(FrogPositionY - 1));//!!!!!!!!!!!!!!
 				}
 				else {
 					break;
@@ -286,9 +274,9 @@ public:
 				if (!(isBoundary(GamePoint(FrogPositionX, FrogPositionY + 1)))) {
 					temp = playingField[FrogPositionX].getLineElement(FrogPositionY + 1);
 					playingField[FrogPositionX].setLineElement(FrogPositionY + 1, GamePoint(FrogPositionX, FrogPositionY + 1, GamePoint::FROG));
+					frog.changeFrogLocation(playingField[FrogPositionX].getLineElement(FrogPositionY + 1));
 					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
 					frog.setFrogMemory(temp);
-					frog.setLocation(playingField[FrogPositionX].getLineElement(FrogPositionY + 1));
 				}
 				else {
 					break;
@@ -300,9 +288,9 @@ public:
 				if (!(isBoundary(GamePoint(FrogPositionX-1, FrogPositionY)))) {
 					temp = playingField[FrogPositionX-1].getLineElement(FrogPositionY);
 					playingField[FrogPositionX-1].setLineElement(FrogPositionY, GamePoint(FrogPositionX-1, FrogPositionY, GamePoint::FROG));
+					frog.changeFrogLocation(playingField[FrogPositionX - 1].getLineElement(FrogPositionY));
 					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
 					frog.setFrogMemory(temp);
-					frog.setLocation(playingField[FrogPositionX-1].getLineElement(FrogPositionY));
 					
 				}
 				else {
@@ -315,9 +303,9 @@ public:
 				if (!(isBoundary(GamePoint(FrogPositionX + 1, FrogPositionY)))) {
 					temp = playingField[FrogPositionX + 1].getLineElement(FrogPositionY);
 					playingField[FrogPositionX + 1].setLineElement(FrogPositionY, GamePoint(FrogPositionX + 1, FrogPositionY, GamePoint::FROG));
+					frog.changeFrogLocation(playingField[FrogPositionX + 1].getLineElement(FrogPositionY));
 					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
 					frog.setFrogMemory(temp);
-					frog.setLocation(playingField[FrogPositionX + 1].getLineElement(FrogPositionY));
 				}
 				else {
 					break;

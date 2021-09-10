@@ -29,11 +29,11 @@ public:
 		this->frogMemory.setPoint(point.getPositionX(), point.getPositionY(), point.getGameElement());
 	}
 
-	void changeFrogLocation(GamePoint &point) {
+	void changeFrogLocation(GamePoint point) {
 		this->location.setPositionX(point.getPositionX());
 		this->location.setPositionY(point.getPositionY());
 	}
-	void changeFrogMemory(GamePoint &point) {
+	void changeFrogMemory(GamePoint point) {
 		this->frogMemory.setPositionX(point.getPositionX());
 		this->frogMemory.setPositionY(point.getPositionY());
 	}
@@ -51,7 +51,7 @@ public:
 		}
 		this->lives = livesCount;
 	}
-	bool isFrog(GamePoint &point) {
+	bool isFrogLocation(GamePoint &point) {
 		if (location==point){
 			return true;
 		}

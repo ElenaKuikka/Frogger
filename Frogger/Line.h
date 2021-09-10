@@ -47,46 +47,137 @@ public:
 
 	friend class Frog;
 
-	void driveLeft(Frog &frog) {
+	void driveRightRoad(Frog &frogObj) {
 		std::vector<GamePoint> tempLine(line);
-		for (int i = 1; i < lineSize-2; i++){//!!!!!!!!!Frog memory
+		
+		if (tempLine[lineSize - 2].isFrog()) {
+			line[1].setGameElement(frogObj.getFrogMemory().getGameElement());
+			frogObj.setFrogMemory(tempLine[lineSize - 3]);
+		}
+		else if (!(tempLine[1].isFrog())) {
+			line[1].setGameElement(tempLine[lineSize - 2].getGameElement());
+		}
+
+		for (int i = lineSize-2; i > 3; i--) {
+			if (tempLine[i - 1].isFrog()){
+				line[i].setGameElement(frogObj.getFrogMemory().getGameElement());
+				frogObj.setFrogMemory(tempLine[i - 2]);
+				i--;
+			}
+			else if(!(tempLine[i].isFrog())){
+				line[i].setGameElement(tempLine[i - 1].getGameElement());
+			}
+		}
+
+		if (tempLine[2].isFrog()) {
+			line[3].setGameElement(frogObj.getFrogMemory().getGameElement());
+			frogObj.setFrogMemory(tempLine[1]);
+		}
+		else if (!(tempLine[3].isFrog())) {
+			line[3].setGameElement(tempLine[2].getGameElement());
+		}
+
+		if (tempLine[1].isFrog()) {
+			line[2].setGameElement(frogObj.getFrogMemory().getGameElement());
+			frogObj.setFrogMemory(tempLine[lineSize - 2]);
+		}
+		else if (!(tempLine[2].isFrog())) {
+			line[2].setGameElement(tempLine[1].getGameElement());
+		}
+
+		checkFrogsNumber(frogObj);
+
+	}
+
+	void driveLeftRoad(Frog &frogObj) {
+
+		std::vector<GamePoint> tempLine(line);
+
+		if (tempLine[2].isFrog()) {
+			line[1].setGameElement(frogObj.getFrogMemory().getGameElement());
+			frogObj.setFrogMemory(tempLine[3]);
+		}
+		else if (!(tempLine[1].isFrog())) {
+			line[1].setGameElement(tempLine[2].getGameElement());
+		}
+
+		for (int i = 2; i < lineSize - 3; i++) {
+			if (tempLine[i + 1].isFrog()) {
+				line[i].setGameElement(frogObj.getFrogMemory().getGameElement());
+				frogObj.setFrogMemory(tempLine[i + 2]);
+				i++;
+			}
+			else {
+				line[i].setGameElement(tempLine[i + 1].getGameElement());
+			}
+		}
+
+		if (tempLine[lineSize - 2].isFrog()) {
+			line[lineSize - 3].setGameElement(frogObj.getFrogMemory().getGameElement());
+			frogObj.setFrogMemory(tempLine[1]);
+		}
+		else if (!(tempLine[lineSize - 3].isFrog())) {
+			line[lineSize - 3].setGameElement(tempLine[lineSize - 2].getGameElement());
+		}
+
+		if (tempLine[1].isFrog()) {
+			line[lineSize - 2].setGameElement(frogObj.getFrogMemory().getGameElement());
+			frogObj.setFrogMemory(tempLine[2]);
+		}
+		else if (!(tempLine[lineSize - 2].isFrog())) {
+			line[lineSize - 2].setGameElement(tempLine[1].getGameElement());
+		}
+
+		checkFrogsNumber(frogObj);
+
+	}
+
+	void driveLeftRiver(Frog &frog) {
+		
+		std::vector<GamePoint> tempLine(line);
+		for (int i = 1; i < lineSize - 2; i++) {
 			if (tempLine[i + 1].isFrog()){
-				line[i] = tempLine[i + 1];
-				frog.setLocation(line[i]);
+				line[i].setGameElement(tempLine[i + 1].getGameElement());
+				frog.changeFrogLocation(line[i]);
 			}
 			else{
-				line[i] = tempLine[i + 1];
+				line[i].setGameElement(tempLine[i + 1].getGameElement());
 			}
 		}
 		if (tempLine[1].isFrog()){
-			line[lineSize - 2] = tempLine[1];
-			frog.setLocation(line[lineSize - 2]);
+			line[lineSize - 2].setGameElement(tempLine[1].getGameElement());
+			frog.changeFrogLocation(line[lineSize - 2]);
 		}
 		else{
-			line[lineSize - 2] = tempLine[1];
+			line[lineSize - 2].setGameElement(tempLine[1].getGameElement());
 		}
+
+		checkFrogsNumber(frog);
 		
 	}
 
-	void driveRight(Frog &frog) {
+	void driveRightRiver(Frog &frog) {
+
 		std::vector<GamePoint> tempLine(line);
 		if (tempLine[lineSize - 2].isFrog()){
-			line[1] = tempLine[lineSize - 2];
-			frog.setLocation(line[1]);
+			line[1].setGameElement(tempLine[lineSize - 2].getGameElement());
+			frog.changeFrogLocation(line[1]);
 		}
 		else{
-			line[1] = tempLine[lineSize - 2];
+			line[1].setGameElement(tempLine[lineSize - 2].getGameElement());
 		}
-		
 		for (int i = 2; i < lineSize - 1; i++) {
-			if (tempLine[i-1].isFrog()){
-				line[i] = tempLine[i - 1];
-				frog.setLocation(line[i]);
+			if (tempLine[i - 1].isFrog()){
+				line[i].setGameElement(tempLine[i - 1].getGameElement());
+				frog.changeFrogLocation(line[i]);
 			}
 			else{
-				line[i] = tempLine[i - 1];
+				line[i].setGameElement(tempLine[i - 1].getGameElement());
 			}
 		}
+
+		checkFrogsNumber(frog);
+		
 	}
 
 	
@@ -94,6 +185,22 @@ private:
 	std::vector<GamePoint> line;
 	const int lineSize = 17;
 	LineSpeed lineSpeed;
+
+	void checkFrogsNumber(Frog &frog) {
+		int frogCheck{ 0 };
+		for (int j = 0; j < lineSize; j++) {
+			if (line[j].isFrog()) {
+				frogCheck++;
+			}
+		}
+		if (frogCheck > 1) {
+			for (int k = 0; k < lineSize; k++) {
+				if ((line[k].isFrog()) && !(frog.isFrogLocation(line[k]))) {
+					line[k].setGameElement(frog.getFrogMemory().getGameElement());
+				}
+			}
+		}
+	}
 };
 
 

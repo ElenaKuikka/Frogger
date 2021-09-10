@@ -74,16 +74,6 @@ public:
 		this->y = object.y;
 		this->gameElement = object.gameElement;
 	}
-	/*
-	bool isBoundary() {
-		if (gameElement == BOUNDARY){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	*/
 	
 	bool isFrog() {
 		if (gameElement == FROG) {
@@ -94,7 +84,14 @@ public:
 		}
 	}
 	
-
+	bool isEnemyElement() {
+		if (gameElement == STONE || gameElement == CAR || gameElement == RIVER){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
 	friend bool operator==(const GamePoint &first, const GamePoint &second) {
 		return(first.x==second.x && first.y==second.y);

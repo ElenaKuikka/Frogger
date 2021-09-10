@@ -6,6 +6,8 @@
 #include"Line.h"
 #include"Frog.h"
 
+
+
 class Field
 {
 public:
@@ -318,6 +320,15 @@ public:
 			}
 		}
 		
+	}
+
+	bool gameNotOver() {
+		if (!frog.isDead()){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 private:
 	std::vector<GamePoint> boundary;

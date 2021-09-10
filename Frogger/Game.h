@@ -5,11 +5,14 @@
 
 class Game {
 public:
-	Game() { this->gameSpeed = 70; }
+	Game() { 
+		this->gameSpeed = 70;
+		this->tick = 0;
+	
+	}
 	void startGame() {
 		
-		unsigned int tick{ 0 };
-		while (true)//gameOver
+		while (field.gameNotOver())//gameOver
 		{
 			tick++;
 			field.printField(tick);
@@ -18,9 +21,17 @@ public:
 		}
 	}
 
+	bool GameOver() {
+		
+	}
+
+	bool isNextStage() {
+
+	}
 private:
 	Field field;
 	int gameSpeed;
+	unsigned int tick;
 };
 
 

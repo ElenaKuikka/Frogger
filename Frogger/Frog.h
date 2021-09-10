@@ -12,6 +12,11 @@ public:
 		this->location.setPoint(13, 8, GamePoint::FROG);
 		this->frogMemory.setPoint(13,8,GamePoint::SAFEPOINT);
 	}
+	Frog(int lives) {
+		this->lives = lives;
+		this->location.setPoint(13, 8, GamePoint::FROG);
+		this->frogMemory.setPoint(13, 8, GamePoint::SAFEPOINT);
+	}
 
 	GamePoint getFrogLocation(){
 		return location;
@@ -37,13 +42,11 @@ public:
 		this->frogMemory.setPositionX(point.getPositionX());
 		this->frogMemory.setPositionY(point.getPositionY());
 	}
-	/*
-	void setFrog(GamePoint &point) {
-		point.setGameElement(GamePoint::FROG);
-	}*/
+	
 	void reduceLives() {
-		lives--;
-		//game over
+		if (isDead()){
+			lives--;
+		}
 	}
 	void setLives(int livesCount) {
 		if (livesCount<0||livesCount>4){
@@ -60,7 +63,23 @@ public:
 		}
 	}
 	
+	bool isDead() {
+		if (frogMemory.isEnemyElement()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
+	bool isGameOverFrog() {
+		if (lives==0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 private:
 	int lives;
 	GamePoint location;

@@ -139,14 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Field.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Frog.h" />
     <ClInclude Include="GamePoint.h" />
     <ClInclude Include="Field.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="Line.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

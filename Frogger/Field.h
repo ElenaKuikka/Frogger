@@ -183,7 +183,7 @@ public:
 		setLinesSpeed();
 	}
 	
-	void printField(unsigned int tick, int score, int timer) {
+	void printField(unsigned int tick, int score, int gameScore, int timer, int attempts) {
 
 		HANDLE hStdOut;
 		COORD cPosition;
@@ -204,9 +204,9 @@ public:
 		std::cout << "Timer: " << timer;
 		std::cout << std::endl;
 		std::cout << std::endl;
-		std::cout << "Score: " << score;
+		std::cout << "Score: " << gameScore + score;
 		std::cout << std::endl;
-		std::cout << "FrogLives: " << frog.getLives();
+		std::cout << "Attempts number: " << attempts;
 	}
 
 	void drivePlayingFields(unsigned int tick, int gameSpeed) {

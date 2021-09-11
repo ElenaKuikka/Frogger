@@ -66,7 +66,7 @@ public:
 	void printPoint() const {
 		std::cout << " " << static_cast<char>(gameElement) << " ";
 	}
-
+	
 	GamePoint &operator=(const GamePoint &object) {
 		if (this == &object){
 			return *this;
@@ -74,6 +74,7 @@ public:
 		this->x = object.x;
 		this->y = object.y;
 		this->gameElement = object.gameElement;
+		return *this;
 	}
 	
 	bool isFrog() {

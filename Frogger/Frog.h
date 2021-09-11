@@ -5,14 +5,12 @@
 #include"GamePoint.h"
 #include"Field.h"
 
-
-
 class Frog {
 public:
-	friend class Field;
+	
 	Frog() {
 		this->location.setPoint(13, 8, GamePoint::FROG);
-		this->frogMemory.setPoint(13,8,GamePoint::SAFEPOINT);
+		this->frogMemory.setPoint(13, 8, GamePoint::SAFEPOINT);
 	}
 
 	GamePoint getFrogLocation(){
@@ -58,13 +56,9 @@ public:
 		}
 	}
 
-	//static constexpr int lives = 4;
 private:
 	GamePoint location;
 	GamePoint frogMemory;
 };
-
-
-
 
 #endif FROGPOINT

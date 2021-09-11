@@ -12,6 +12,7 @@ public:
 		THIRD = 11,
 		FOURTH = 7
 	};
+	
 	Line() {
 		line.resize(lineSize);
 		lineSpeed = FIRST;
@@ -46,11 +47,9 @@ public:
 		}
 	}
 
-	friend class Frog;
-
 	void driveRightRoad(Frog &frogObj) {
 		std::vector<GamePoint> tempLine(line);
-		
+
 		if (tempLine[lineSize - 2].isFrog()) {
 			line[1].setGameElement(frogObj.getFrogMemory().getGameElement());
 			frogObj.setFrogMemory(tempLine[lineSize - 3]);
@@ -59,13 +58,13 @@ public:
 			line[1].setGameElement(tempLine[lineSize - 2].getGameElement());
 		}
 
-		for (int i = lineSize-2; i > 3; i--) {
-			if (tempLine[i - 1].isFrog()){
+		for (int i = lineSize - 2; i > 3; i--) {
+			if (tempLine[i - 1].isFrog()) {
 				line[i].setGameElement(frogObj.getFrogMemory().getGameElement());
 				frogObj.setFrogMemory(tempLine[i - 2]);
 				i--;
 			}
-			else if(!(tempLine[i].isFrog())){
+			else if (!(tempLine[i].isFrog())) {
 				line[i].setGameElement(tempLine[i - 1].getGameElement());
 			}
 		}

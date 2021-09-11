@@ -11,48 +11,13 @@ public:
 		this->tick = 0;
 		this->stageScore = 0;
 	}
-	void startStage(int attempts, int gameScore) {
-		
-		
-			while (!isStageOver()) {
-				tick++;
-				gameTimer.setTimer(tick);
-				field.printField(tick, stageScore, gameScore, gameTimer.getStageTimer(), attempts);
-				field.drivePlayingFields(tick, stageSpeed);
-				field.FrogDrive();
-				setScore();
-			}
-			system("cls");
-			
-	}
+	void startStage(int attempts, int gameScore);
 
-	
-	bool FrogIsDead() {
-		if (field.getFrog().isDead()){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+	bool FrogIsDead();
 
-	bool FrogIsHome() {
-		if (field.getFrog().getFrogMemory().isHome()){
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	bool FrogIsHome();
 
-	bool isStageOver() {
-		if (FrogIsDead()||gameTimer.stageTimeOver()||FrogIsHome()){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+	bool isStageOver();
 
 	void setScore() {
 		this->stageScore = field.frogInNewLine() * 100;
@@ -74,14 +39,7 @@ public:
 		int getStageTimer() {
 			return stageTimer;
 		}
-		bool stageTimeOver() {
-			if (stageTimer == 0) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
+		bool stageTimeOver();
 	private:
 		int stageTimer;
 	};
@@ -101,21 +59,7 @@ struct Game {
 		this->attemptsNumber = 4;
 	}
 	
-	void startGame() {
-		
-		while (!(attemptsNumber == 0)){
-			Stage *newStage = new Stage;
-			newStage->startStage(attemptsNumber, gameScore);
-			if (!(newStage->FrogIsHome())){
-				attemptsNumber--;
-			}
-			gameScore += newStage->getScore();
-			delete newStage;
-		}
-		std::cout << "Game over!\n";
-		std::cout << "Your score: " << gameScore;
-		std::cout << std::endl;
-	}
+	void startGame();
 
 	int getGameScore() {
 		return gameScore;

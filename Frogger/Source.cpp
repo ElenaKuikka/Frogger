@@ -9,8 +9,6 @@ int main() {
 	
 	Game newGame;
 	newGame.startGame();
-	//Stage newGame;
-	//newGame.startStage();
 	return 0;
 }
 

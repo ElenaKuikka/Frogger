@@ -6,11 +6,9 @@
 #include<vector>
 #include<Windows.h>
 #include<conio.h>
-#include<chrono>
 #include<set>
 
 using Position = unsigned short;
-
 
 class GamePoint
 {
@@ -28,16 +26,8 @@ public:
 		FROG = 'F'
 	};
 	GamePoint() :x(0), y(0), gameElement(BOUNDARY) {}
-	GamePoint(Position x, Position y) {
-		this->x = x;
-		this->y = y;
-		this->gameElement = BOUNDARY;
-	}
-	GamePoint(Position x, Position y, GameElement elemName) {
-		this->x = x;
-		this->y = y;
-		this->gameElement = elemName;
-	}
+	GamePoint(Position x, Position y);
+	GamePoint(Position x, Position y, GameElement elemName);
 	Position getPositionX() const{
 		return this->x;
 	}
@@ -57,56 +47,21 @@ public:
 	void setGameElement(GameElement elemName) {
 		this->gameElement = elemName;
 	}
-	void setPoint(Position x, Position y, GameElement elemName) {
-		this->x = x;
-		this->y = y;
-		this->gameElement = elemName;
-	}
+	void setPoint(Position x, Position y, GameElement elemName);
 
 	void printPoint() const {
 		std::cout << " " << static_cast<char>(gameElement) << " ";
 	}
 	
-	GamePoint &operator=(const GamePoint &object) {
-		if (this == &object){
-			return *this;
-		}
-		this->x = object.x;
-		this->y = object.y;
-		this->gameElement = object.gameElement;
-		return *this;
-	}
+	GamePoint &operator=(const GamePoint &object);
 	
-	bool isFrog() {
-		if (gameElement == FROG) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	bool isFrog();
 	
-	bool isEnemyElement() {
-		if (gameElement == STONE || gameElement == CAR || gameElement == RIVER){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+	bool isEnemyElement();
 
-	bool isHome() {
-		if (gameElement == HOME) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	bool isHome();
 
-	friend bool operator==(const GamePoint &first, const GamePoint &second) {
-		return(first.x==second.x && first.y==second.y);
-	}
+	friend bool operator==(const GamePoint &first, const GamePoint &second);
 
 private:
 	Position x = 0;

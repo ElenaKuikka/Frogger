@@ -7,6 +7,7 @@
 #include<Windows.h>
 #include<conio.h>
 #include<chrono>
+#include<set>
 
 using Position = unsigned short;
 
@@ -89,6 +90,15 @@ public:
 			return true;
 		}
 		else{
+			return false;
+		}
+	}
+
+	bool isHome() {
+		if (gameElement == HOME) {
+			return true;
+		}
+		else {
 			return false;
 		}
 	}

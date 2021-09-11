@@ -7,6 +7,7 @@
 
 class Frog {
 public:
+	friend class Field;
 	Frog() {
 		this->lives = 4;
 		this->location.setPoint(13, 8, GamePoint::FROG);
@@ -24,6 +25,10 @@ public:
 
 	GamePoint getFrogMemory(){
 		return frogMemory;
+	}
+
+	int getLives() {
+		return lives;
 	}
 
 	void setLocation(GamePoint point) {
@@ -44,16 +49,12 @@ public:
 	}
 	
 	void reduceLives() {
-		if (isDead()){
-			lives--;
-		}
+		lives--;
 	}
-	void setLives(int livesCount) {
-		if (livesCount<0||livesCount>4){
-			throw std::domain_error("Number of lives must be between 0 and 4");
-		}
-		this->lives = livesCount;
+	void addLives() {
+		lives++;
 	}
+	
 	bool isFrogLocation(GamePoint &point) {
 		if (location==point){
 			return true;
@@ -72,14 +73,6 @@ public:
 		}
 	}
 
-	bool isGameOverFrog() {
-		if (lives==0){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
 private:
 	int lives;
 	GamePoint location;

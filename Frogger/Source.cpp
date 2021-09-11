@@ -2,6 +2,7 @@
 #include"Field.h"
 #include"Game.h"
 #include"Line.h"
+#include"Frog.h"
 
 
 int main() {

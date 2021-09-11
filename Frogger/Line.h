@@ -15,14 +15,9 @@ public:
 	Line() {
 		line.resize(lineSize);
 		lineSpeed = FIRST;
+		frogInLine = false;
 	}
-	/*
-	Line(const Line &lineL) {
-		for (int i = 0; i < lineSize; i++){
-			this->line[i].setPoint(lineL.line[i].getPositionX(), lineL.line[i].getPositionY(), lineL.line[i].getGameElement());
-		}
-	}
-	*/
+	
 	const int getSize() {
 		return lineSize;
 	}
@@ -32,11 +27,17 @@ public:
 	GamePoint getLineElement(int index) {
 		return line[index];
 	}
+	bool getFrogInLine() {
+		return frogInLine;
+	}
 	void setLineElement(int index, GamePoint point) {
 		line[index] = point;
 	}
 	void setLineSpeed(LineSpeed speed) {
 		this->lineSpeed = speed;
+	}
+	void setFrogInLine() {
+		this->frogInLine = true;
 	}
 
 	void printLine() {
@@ -180,11 +181,11 @@ public:
 		
 	}
 
-	
 private:
 	std::vector<GamePoint> line;
 	const int lineSize = 17;
 	LineSpeed lineSpeed;
+	bool frogInLine;
 
 	void checkFrogsNumber(Frog &frog) {
 		int frogCheck{ 0 };

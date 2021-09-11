@@ -7,20 +7,12 @@
 #include"Frog.h"
 
 
-
 class Field
 {
 public:
+	friend class Frog;
 	Field() {
-		/*
-		field.resize(rowSize);
-		for (int i = 0; i < rowSize; i++){
-			field[i].resize(colSize);
-			for (int j = 0; j < colSize; j++){
-				field[i][j] = GamePoint(i, j);
-			}
-		}
-		*/
+		
 		boundary.resize(rowSize * 4);
 		int k{ 0 };
 		for (int i = 0; i < colSize; i++){
@@ -190,8 +182,8 @@ public:
 		}
 		setLinesSpeed();
 	}
-
-	void printField(unsigned int tick) {
+	
+	void printField(unsigned int tick, int score, int timer) {
 
 		HANDLE hStdOut;
 		COORD cPosition;
@@ -206,13 +198,18 @@ public:
 			playingField[i].printLine();
 			
 			std::cout << "\n";
+	
 		}
 		std::cout << std::endl;
-		std::cout << tick;
+		std::cout << "Timer: " << timer;
 		std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << "Score: " << score;
+		std::cout << std::endl;
+		std::cout << "FrogLives: " << frog.getLives();
 	}
 
-	void drivePlayingFields(unsigned int tick, int gameSpeed) {//!!!!!
+	void drivePlayingFields(unsigned int tick, int gameSpeed) {
 		Sleep(gameSpeed);
 		if (tick % playingField[5].getLineSpeed() == 0 ) {
 			playingField[5].driveRightRiver(frog);
@@ -292,8 +289,8 @@ public:
 					playingField[FrogPositionX-1].setLineElement(FrogPositionY, GamePoint(FrogPositionX-1, FrogPositionY, GamePoint::FROG));
 					frog.changeFrogLocation(playingField[FrogPositionX - 1].getLineElement(FrogPositionY));
 					playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
+					playingField[FrogPositionX].setFrogInLine();
 					frog.setFrogMemory(temp);
-					
 				}
 				else {
 					break;
@@ -322,18 +319,22 @@ public:
 		
 	}
 
-	bool gameNotOver() {
-		if (!frog.isDead()){
-			return true;
+	int frogInNewLine() {
+		int k{ 0 };
+		for (int i = 0; i < playingField.size(); i++){
+			if (playingField[i].getFrogInLine()){
+				k++;
+			}
 		}
-		else{
-			return false;
+		if (frog.getFrogMemory().isHome()) {
+			k += 2;
 		}
+		return k;
 	}
+	
 private:
 	std::vector<GamePoint> boundary;
 	std::vector<Line> playingField;
-	//std::vector<std::vector<GamePoint>> field;
 	const int rowSize = 15;
 	const int colSize = 17;
 	Frog frog;

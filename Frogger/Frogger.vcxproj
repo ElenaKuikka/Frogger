@@ -145,6 +145,7 @@
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DriveStrategy.h" />
     <ClInclude Include="Frog.h" />
     <ClInclude Include="GamePoint.h" />
     <ClInclude Include="Field.h" />

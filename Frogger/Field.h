@@ -5,7 +5,7 @@
 #include "GamePoint.h"
 #include"Line.h"
 #include"Frog.h"
-
+#include"DriveStrategy.h"
 
 class Field
 {
@@ -26,20 +26,28 @@ public:
 	Frog getFrog() {
 		return frog;
 	}
-
-	void FrogDrive();
-
+	
 	int frogInNewLine();
 	
+	~Field() { if (this->strategy) delete this->strategy; }
+
+	void setStrategy(DriveStrategy *strategy);
+
+	void FrogDrive() {
+		this->strategy->Drive(frog, playingField, isBoundary(this->strategy->checkNextStep(frog)));
+	}
+
 private:
 	std::vector<GamePoint> boundary;
 	std::vector<Line> playingField;
 	const int rowSize = 15;
 	const int colSize = 17;
 	Frog frog;
+	DriveStrategy *strategy;
 
 	void setLinesSpeed();
 
 };
+
 
 #endif FIELD

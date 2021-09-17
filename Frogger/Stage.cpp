@@ -1,5 +1,38 @@
 #include"Stage.h"
 
+void Stage::frogControl() {
+	if (_kbhit()) {
+		switch (_getch()) {
+		case 'a':
+		{
+			this->field.setStrategy(new DriveLeft);
+			this->field.FrogDrive();
+			break;
+		}
+		case 'd':
+		{
+			this->field.setStrategy(new DriveRight);
+			this->field.FrogDrive();
+			break;
+		}
+		case 'w':
+		{
+			this->field.setStrategy(new DriveUp);
+			this->field.FrogDrive();
+			break;
+		}
+		case 's':
+		{
+			this->field.setStrategy(new DriveDown);
+			this->field.FrogDrive();
+			break;
+		}
+		default:
+			break;
+		}
+	}
+}
+
 void Stage::startStage(int attempts, int gameScore) {
 
 
@@ -8,7 +41,7 @@ void Stage::startStage(int attempts, int gameScore) {
 		gameTimer.setTimer(tick);
 		field.printField(tick, stageScore, gameScore, gameTimer.getStageTimer(), attempts);
 		field.drivePlayingFields(tick, stageSpeed);
-		field.FrogDrive();
+		frogControl();
 		setScore();
 	}
 	system("cls");
@@ -52,7 +85,17 @@ bool Stage::Timer::stageTimeOver() {
 }
 
 void Game::startGame() {
-
+	std::cout << "FROGGER RULES\n\n";
+	std::cout << "Move the frog using 'a','d','w','s'.\n";
+	std::cout << "Object is to safely maneuver frog to its home(H) in a limited time.\n";
+	std::cout << "Cross the highway without hitting a car(C) and cross the river(-) without falling.\n\n";
+	std::cout << "Press any key to continue.\n";
+	
+	do{
+		Sleep(5);
+	} while (!(_kbhit()));
+	system("cls");
+	
 	while (!(attemptsNumber == 0)) {
 		Stage *newStage = new Stage;
 		newStage->startStage(attemptsNumber, gameScore);

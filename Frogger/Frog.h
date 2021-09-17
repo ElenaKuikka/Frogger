@@ -13,11 +13,11 @@ public:
 		this->frogMemory.setPoint(13, 8, GamePoint::SAFEPOINT);
 	}
 
-	GamePoint getFrogLocation(){
+	GamePoint getFrogLocation() const{
 		return location;
 	}
 
-	GamePoint getFrogMemory(){
+	GamePoint getFrogMemory() const{
 		return frogMemory;
 	}
 

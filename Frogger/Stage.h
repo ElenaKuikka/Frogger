@@ -11,6 +11,9 @@ public:
 		this->tick = 0;
 		this->stageScore = 0;
 	}
+	
+	void frogControl();
+
 	void startStage(int attempts, int gameScore);
 
 	bool FrogIsDead();

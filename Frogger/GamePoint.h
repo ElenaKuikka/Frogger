@@ -7,6 +7,7 @@
 #include<Windows.h>
 #include<conio.h>
 #include<set>
+#include<functional>
 
 using Position = unsigned short;
 
@@ -62,7 +63,7 @@ public:
 	bool isHome();
 
 	friend bool operator==(const GamePoint &first, const GamePoint &second);
-
+	
 private:
 	Position x = 0;
 	Position y = 0;

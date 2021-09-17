@@ -170,6 +170,8 @@ Field::Field() {
 		playingField[14].setLineElement(i, GamePoint(14, i, GamePoint::BOUNDARY));
 	}
 	setLinesSpeed();
+
+	this->strategy = nullptr;
 }
 
 void Field::printField(unsigned int tick, int score, int gameScore, int timer, int attempts) {
@@ -229,77 +231,6 @@ bool Field::isBoundary(const GamePoint &point) const {
 	return false;
 }
 
-void Field::FrogDrive() {
-	Position FrogPositionX = frog.getFrogLocation().getPositionX();
-	Position FrogPositionY = frog.getFrogLocation().getPositionY();
-	GamePoint temp;
-	if (_kbhit()) {
-		switch (_getch()) {
-		case 'a':
-		{
-			if (!(isBoundary(GamePoint(FrogPositionX, FrogPositionY - 1)))) {
-				temp = playingField[FrogPositionX].getLineElement(FrogPositionY - 1);
-				playingField[FrogPositionX].setLineElement(FrogPositionY - 1, GamePoint(FrogPositionX, FrogPositionY - 1, GamePoint::FROG));
-				frog.changeFrogLocation(playingField[FrogPositionX].getLineElement(FrogPositionY - 1));
-				playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
-				frog.setFrogMemory(temp);
-			}
-			else {
-				break;
-			}
-			break;
-		}
-		case 'd':
-		{
-			if (!(isBoundary(GamePoint(FrogPositionX, FrogPositionY + 1)))) {
-				temp = playingField[FrogPositionX].getLineElement(FrogPositionY + 1);
-				playingField[FrogPositionX].setLineElement(FrogPositionY + 1, GamePoint(FrogPositionX, FrogPositionY + 1, GamePoint::FROG));
-				frog.changeFrogLocation(playingField[FrogPositionX].getLineElement(FrogPositionY + 1));
-				playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
-				frog.setFrogMemory(temp);
-			}
-			else {
-				break;
-			}
-			break;
-		}
-		case 'w':
-		{
-			if (!(isBoundary(GamePoint(FrogPositionX - 1, FrogPositionY)))) {
-				temp = playingField[FrogPositionX - 1].getLineElement(FrogPositionY);
-				playingField[FrogPositionX - 1].setLineElement(FrogPositionY, GamePoint(FrogPositionX - 1, FrogPositionY, GamePoint::FROG));
-				frog.changeFrogLocation(playingField[FrogPositionX - 1].getLineElement(FrogPositionY));
-				playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
-				playingField[FrogPositionX].setFrogInLine();
-				frog.setFrogMemory(temp);
-			}
-			else {
-				break;
-			}
-			break;
-		}
-		case 's':
-		{
-			if (!(isBoundary(GamePoint(FrogPositionX + 1, FrogPositionY)))) {
-				temp = playingField[FrogPositionX + 1].getLineElement(FrogPositionY);
-				playingField[FrogPositionX + 1].setLineElement(FrogPositionY, GamePoint(FrogPositionX + 1, FrogPositionY, GamePoint::FROG));
-				frog.changeFrogLocation(playingField[FrogPositionX + 1].getLineElement(FrogPositionY));
-				playingField[FrogPositionX].setLineElement(FrogPositionY, GamePoint(FrogPositionX, FrogPositionY, frog.getFrogMemory().getGameElement()));
-				frog.setFrogMemory(temp);
-			}
-			else {
-				break;
-			}
-			break;
-
-		}
-		default:
-			break;
-		}
-	}
-
-}
-
 int Field::frogInNewLine() {
 	int k{ 0 };
 	for (int i = 0; i < playingField.size(); i++) {
@@ -311,6 +242,13 @@ int Field::frogInNewLine() {
 		k += 2;
 	}
 	return k;
+}
+
+void Field::setStrategy(DriveStrategy *strategy) {
+	if (!(this->strategy)) {
+		delete this->strategy;
+	}
+	this->strategy = strategy;
 }
 
 void Field::setLinesSpeed() {

@@ -6,8 +6,6 @@
 #include<vector>
 #include<Windows.h>
 #include<conio.h>
-#include<set>
-#include<functional>
 
 using Position = unsigned short;
 

@@ -48,7 +48,7 @@ void Stage::startStage(int attempts, int gameScore) {
 
 }
 
-bool Stage::FrogIsDead() {
+bool Stage::FrogIsDead(){
 	if (field.getFrog().isDead()) {
 		return true;
 	}

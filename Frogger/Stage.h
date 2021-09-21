@@ -2,7 +2,7 @@
 
 #define STAGE
 #include"Field.h"
-
+#include"DriveStrategy.h"
 
 class Stage {
 public:
@@ -25,9 +25,8 @@ public:
 	void setScore() {
 		this->stageScore = field.frogInNewLine() * 100;
 	}
-	
 
-	int getScore() {
+	int getScore() const{
 		return stageScore;
 	}
 
@@ -64,7 +63,7 @@ struct Game {
 	
 	void startGame();
 
-	int getGameScore() {
+	int getGameScore() const{
 		return gameScore;
 	}
 	

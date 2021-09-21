@@ -1,6 +1,6 @@
-#ifndef DRIVESTRATEGY
+#ifndef DRIVE_STRATEGY
 
-#define DRIVESTRATEGY
+#define DRIVE_STRATEGY
 
 #include"Field.h"
 
@@ -15,7 +15,7 @@ class DriveLeft :public DriveStrategy {
 	GamePoint checkNextStep(Frog &frog) override {
 		return GamePoint(frog.getFrogLocation().getPositionX(), frog.getFrogLocation().getPositionY() - 1);
 	}
-	
+
 	virtual void Drive(Frog &frog, std::vector<Line> &playingField, bool isBoundary) override {
 		Position FrogPositionX = frog.getFrogLocation().getPositionX();
 		Position FrogPositionY = frog.getFrogLocation().getPositionY();
@@ -92,4 +92,4 @@ class DriveDown :public DriveStrategy {
 
 };
 
-#endif DRIVESTRATEGY
+#endif DRIVE_STRATEGY

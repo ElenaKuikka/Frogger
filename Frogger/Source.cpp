@@ -3,6 +3,7 @@
 #include"Stage.h"
 #include"Line.h"
 #include"Frog.h"
+#include"DriveStrategy.h"
 
 
 int main() {
